@@ -7,19 +7,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Clean, Download and Install OPA Binary
+          name: Safe OPA Installation
           command: |
-            # Clean out any bad remnants first
-            sudo rm -f /usr/local/bin/opa
-            
-            # Download using the correct github repository name (no hyphens)
+            # Download directly to the temporary folder to keep the repository clean
             curl -L --fail -o /tmp/opa "https://github.com"
             chmod +x /tmp/opa
             sudo mv /tmp/opa /usr/local/bin/opa
       - run:
           name: Test OPA Policies
           command: |
-            echo "Running OPA Unit Tests..."
+            echo "Running clean OPA Unit Tests..."
             opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
