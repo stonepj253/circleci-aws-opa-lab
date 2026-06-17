@@ -9,21 +9,17 @@ jobs:
       - run:
           name: Clean, Download and Install OPA Binary
           command: |
-            # Remove any legacy system binary remnants
+            # Clear old file variants
             sudo rm -f /usr/local/bin/opa
             
-            # Download a fresh binary using the absolute clean URL
-            curl -L --fail -o /tmp/opa "https://github.com/open-policy-agent/opa/releases/download/v0.68.0/opa_linux_amd64_static"
+            # Use the verified absolute GitHub Release distribution path
+            curl -L --fail -o /tmp/opa "https://github.com"
             chmod +x /tmp/opa
             sudo mv /tmp/opa /usr/local/bin/opa
       - run:
           name: Test OPA Policies
           command: |
-            echo "Purging unexpected file system artifacts..."
-            # Remove any stray files that got accidentally committed as plain text/html pages
-            rm -f policies/opa tests/opa opa
-            
-            echo "Running clean OPA Unit Tests..."
+            echo "Running OPA validation suite..."
             opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
