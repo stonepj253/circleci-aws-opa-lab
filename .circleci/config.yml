@@ -9,7 +9,10 @@ jobs:
       - run:
           name: Clean, Download and Install OPA Binary
           command: |
-            # Download directly to isolated runtime workspace /tmp/ to avoid repository pollution
+            # Clean out any bad remnants first
+            sudo rm -f /usr/local/bin/opa
+            
+            # Download using the correct github repository name (no hyphens)
             curl -L --fail -o /tmp/opa "https://github.com"
             chmod +x /tmp/opa
             sudo mv /tmp/opa /usr/local/bin/opa
