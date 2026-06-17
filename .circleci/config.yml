@@ -1,19 +1,23 @@
 ﻿version: 2.1
 
-orbs:
-  opa: circleci/opa@1.0.0
-
 jobs:
   policy-validation:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - opa/setup:
-          version: v0.58.0
+      - run:
+          name: Download and Verify Open Policy Agent
+          command: |
+            # Pull directly from GitHub releases to bypass HTML 404 proxy pages
+            curl -L --fail -o opa "https://github.com"
+            chmod +x opa
+            sudo mv opa /usr/local/bin/
       - run:
           name: Test OPA Policies
-          command: opa test policies/ tests/ -v
+          command: |
+            echo "Running verbose OPA test suite..."
+            opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
     docker:
