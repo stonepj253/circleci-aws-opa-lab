@@ -33,6 +33,12 @@ jobs:
       AWS_STS_REGIONAL_ENDPOINTS: global
     steps:
       - checkout
+      - run:
+          name: Fix IAM Trust Policy
+          command: |
+            aws iam update-assume-role-policy \
+              --role-name CircleCILabRole \
+              --policy-document file://aws-configs/circleci-trust-policy.json
       - aws-cli/setup:
           role_arn: "arn:aws:iam::126104434750:role/CircleCILabRole"
           region: us-east-1
