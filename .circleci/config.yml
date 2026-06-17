@@ -7,20 +7,24 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Localized OPA Installation
+          name: Clean, Download and Install OPA Binary
           command: |
-            # Create an isolated local bin directory inside the clean workspace
-            mkdir -p ./local_bin
+            # Remove any legacy system binary remnants
+            sudo rm -f /usr/local/bin/opa
             
-            # Download directly to the local folder, completely ignoring the cached /usr/local/bin/
-            curl -L --fail -o ./local_bin/opa "https://github.com"
-            chmod +x ./local_bin/opa
+            # Download a fresh binary using the absolute clean URL
+            curl -L --fail -o /tmp/opa "https://github.com"
+            chmod +x /tmp/opa
+            sudo mv /tmp/opa /usr/local/bin/opa
       - run:
           name: Test OPA Policies
           command: |
-            echo "Running clean localized OPA Unit Tests..."
-            # Execute the local, verified binary directly
-            ./local_bin/opa test policies/ tests/ -v
+            echo "Purging unexpected file system artifacts..."
+            # Remove any stray files that got accidentally committed as plain text/html pages
+            rm -f policies/opa tests/opa opa
+            
+            echo "Running clean OPA Unit Tests..."
+            opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
     docker:
