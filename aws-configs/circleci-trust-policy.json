@@ -1,0 +1,20 @@
+﻿{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::AIDAR2XDI7A7EHZIRUQBZ:oidc-provider/oidc.circleci.com/org/cb36fbd4-c228-4a93-bde8-1594de74bb72"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.circleci.com/org/cb36fbd4-c228-4a93-bde8-1594de74bb72:aud": "cb36fbd4-c228-4a93-bde8-1594de74bb72"
+        },
+        "StringLike": {
+          "oidc.circleci.com/org/cb36fbd4-c228-4a93-bde8-1594de74bb72:sub": "org/cb36fbd4-c228-4a93-bde8-1594de74bb72/project/fc852d2c-7697-4733-b0d6-89eb565004f2/user/*"
+        }
+      }
+    }
+  ]
+}
