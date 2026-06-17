@@ -7,17 +7,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Safe OPA Installation
+          name: Localized OPA Installation
           command: |
-            # Download directly to the temporary folder to keep the repository clean
-            curl -L --fail -o /tmp/opa "https://github.com"
-            chmod +x /tmp/opa
-            sudo mv /tmp/opa /usr/local/bin/opa
+            # Create an isolated local bin directory inside the clean workspace
+            mkdir -p ./local_bin
+            
+            # Download directly to the local folder, completely ignoring the cached /usr/local/bin/
+            curl -L --fail -o ./local_bin/opa "https://github.com"
+            chmod +x ./local_bin/opa
       - run:
           name: Test OPA Policies
           command: |
-            echo "Running clean OPA Unit Tests..."
-            opa test policies/ tests/ -v
+            echo "Running clean localized OPA Unit Tests..."
+            # Execute the local, verified binary directly
+            ./local_bin/opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
     docker:
