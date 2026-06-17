@@ -8,14 +8,13 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            # Download direct from GitHub Release mirror to bypass 404 HTML redirection issues
             curl -L -o opa https://github.com
             chmod +x opa
             sudo mv opa /usr/local/bin/
             sudo apt-get update && sudo apt-get install -y jq
       - run:
           name: Test OPA Policies
-          command: opa test policies/ tests/
+          command: opa test policies/ tests/ -v
   deploy-compliant-infrastructure:
     docker:
       - image: cimg/aws:2026.04
