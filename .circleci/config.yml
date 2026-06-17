@@ -7,16 +7,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Download and Verify Open Policy Agent
+          name: Clean, Download and Install OPA Binary
           command: |
-            # Pull directly from GitHub releases to bypass HTML 404 proxy pages
-            curl -L --fail -o opa "https://github.com"
-            chmod +x opa
-            sudo mv opa /usr/local/bin/
+            # Download directly to isolated runtime workspace /tmp/ to avoid repository pollution
+            curl -L --fail -o /tmp/opa "https://github.com"
+            chmod +x /tmp/opa
+            sudo mv /tmp/opa /usr/local/bin/opa
       - run:
           name: Test OPA Policies
           command: |
-            echo "Running verbose OPA test suite..."
+            echo "Running OPA Unit Tests..."
             opa test policies/ tests/ -v
 
   deploy-compliant-infrastructure:
