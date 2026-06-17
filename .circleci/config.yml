@@ -1,4 +1,4 @@
-﻿version: 2.1
+version: 2.1
 
 jobs:
   test-aws-connection:
@@ -18,7 +18,7 @@ jobs:
           name: Configure OIDC and Test AWS Connection
           command: |
             # Set up OIDC authentication
-            export AWS_ROLE_ARN="arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/CircleCILabRole"
+            export AWS_ROLE_ARN="arn:aws:iam::126104434750:role/CircleCILabRole"
             export AWS_WEB_IDENTITY_TOKEN_FILE="/tmp/web-identity-token"
             echo $CIRCLE_OIDC_TOKEN > $AWS_WEB_IDENTITY_TOKEN_FILE
 
