@@ -13,7 +13,7 @@ jobs:
             sudo rm -f /usr/local/bin/opa
             
             # Download a fresh binary using the absolute clean URL
-            curl -L --fail -o /tmp/opa "https://github.com"
+            curl -L --fail -o /tmp/opa "https://github.com/open-policy-agent/opa/releases/download/v0.68.0/opa_linux_amd64_static"
             chmod +x /tmp/opa
             sudo mv /tmp/opa /usr/local/bin/opa
       - run:
