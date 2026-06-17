@@ -6,6 +6,7 @@ jobs:
       - image: cimg/base:stable
     environment:
       AWS_DEFAULT_REGION: us-east-1
+      AWS_STS_REGIONAL_ENDPOINTS: global
     steps:
       - checkout
       - run:
