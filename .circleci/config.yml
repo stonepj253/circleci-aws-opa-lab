@@ -13,7 +13,7 @@ jobs:
             sudo rm -f /usr/local/bin/opa
             
             # Use the verified absolute GitHub Release distribution path
-            curl -L --fail -o /tmp/opa "https://github.com"
+            curl -L --fail -o /tmp/opa "https://github.com/open-policy-agent/opa/releases/download/v0.58.0/opa_linux_amd64"
             chmod +x /tmp/opa
             sudo mv /tmp/opa /usr/local/bin/opa
       - run:
