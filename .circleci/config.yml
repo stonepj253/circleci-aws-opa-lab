@@ -2,16 +2,9 @@
 jobs:
   policy-validation:
     docker:
-      - image: cimg/python:3.9
+      - image: openpolicyagent/opa:0.58.0-static
     steps:
       - checkout
-      - run:
-          name: Install Dependencies
-          command: |
-            curl -L -o opa https://github.com
-            chmod +x opa
-            sudo mv opa /usr/local/bin/
-            sudo apt-get update && sudo apt-get install -y jq
       - run:
           name: Test OPA Policies
           command: opa test policies/ tests/ -v
