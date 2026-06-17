@@ -2,9 +2,16 @@
 jobs:
   policy-validation:
     docker:
-      - image: openpolicyagent/opa:0.58.0-static
+      - image: cimg/python:3.9
     steps:
       - checkout
+      - run:
+          name: Install Open Policy Agent
+          command: |
+            # Download direct from GitHub Releases using explicit flags to prevent 404 text captures
+            curl -L --fail -o opa https://github.com
+            chmod +x opa
+            sudo mv opa /usr/local/bin/
       - run:
           name: Test OPA Policies
           command: opa test policies/ tests/ -v
